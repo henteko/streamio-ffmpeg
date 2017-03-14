@@ -42,7 +42,7 @@ module FFMPEG
       end
 
       @command = [FFMPEG.ffmpeg_binary, '-y', *iopts]
-      if @input.is_a(Array)
+      if @input.is_a?(Array)
         @input.each do |input|
           @command.push('-i')
           @command.push(input)
