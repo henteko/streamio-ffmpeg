@@ -41,7 +41,15 @@ module FFMPEG
         input_options.each { |k, v| iopts += ['-' + k.to_s, v] }
       end
 
-      @command = [FFMPEG.ffmpeg_binary, '-y', *iopts, '-i', @input, *@raw_options.to_a, @output_file]
+      @command = [FFMPEG.ffmpeg_binary, '-y', *iopts]
+      if @input.is_a(Array)
+        @input.each do |input|
+          @command.push('-i')
+          @command.push(input)
+        end
+      end
+      @command.push(*@raw_options.to_a)
+      @command.push(@output_file)
     end
 
     def run(&block)
